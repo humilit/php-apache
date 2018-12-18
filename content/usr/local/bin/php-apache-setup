@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+set -e
+
+apk update
+apk-add-recipe /usr/local/recipe/php-apache.recipe
+apk-cache-flush
+
+apache2-module-enable alias deflate expires headers mime log_config dir

@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+set -e
+
+if [ "$ALLOW_ROBOT_INDEXING" != "true" ]; then
+    echo "enabling alias_development, because ALLOW_ROBOT_INDEXING was not set to 'true'" >&2
+    # alias can not be enabled in If-block in apache conf, so we do it in entrypoint
+    apache2-module-enable alias_development
+fi
+
+if [ "$1" = "httpd" ]; then
+    set -- "$@" -DFOREGROUND
+fi;
+
+exec "$@"
